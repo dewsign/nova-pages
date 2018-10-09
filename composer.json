@@ -1,0 +1,40 @@
+{
+    "name": "dewsign/nova-pages",
+    "description": "Boilerplate repository for creating new Laravel or Javascript/Vue NPM packages",
+    "type": "boilerplate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Mark",
+            "email": "m2de@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.0.0",
+        "laravel/framework": ">=5.0.0",
+        "maxfactor/support": "dev-task-improvements-docs",
+        "benjaminhirsch/nova-slug-field": "^1.0",
+        "silvanite/nova-field-cloudinary": "^1.0",
+        "dewsign/nova-repeater-blocks": "dev-master",
+        "epartment/nova-dependency-container": "^1.1",
+        "silvanite/brandenburg": "^1.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": ">=3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dewsign\\NovaPages\\": "src-php/"
+        }
+    },
+    "extra":{
+        "laravel": {
+            "providers": [
+                "Dewsign\\NovaPages\\Providers\\PackageServiceProvider",
+                "Dewsign\\NovaPages\\Providers\\AuthServiceProvider"
+            ]
+        }
+    }
+}
