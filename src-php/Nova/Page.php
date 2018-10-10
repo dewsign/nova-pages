@@ -70,10 +70,13 @@ class Page extends Resource
             ID::make()->sortable(),
             Boolean::make('Active')->sortable()->rules('required', 'boolean'),
             Boolean::make('Featured')->sortable()->rules('required', 'boolean'),
-            Number::make('Priority')->sortable()->rules('required', 'integer'),
+            Number::make('Priority')->sortable()->rules('required_if:active,1', 'nullable', 'integer'),
             TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('Slug'),
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
-            BelongsTo::make('Parent', 'parent', Page::class),
+            BelongsTo::make('Parent', 'parent', Page::class)->searchable(),
+            Text::make('Full Path', function () {
+                return $this->full_path;
+            })->hideFromIndex(),
             CloudinaryImage::make('Image'),
             Textarea::make('Summary'),
             HasMany::make('Child Pages', 'children', Page::class),

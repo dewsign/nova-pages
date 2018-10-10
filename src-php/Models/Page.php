@@ -29,16 +29,7 @@ class Page extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'active',
-        'featured',
-        'image',
-        'name',
-        'parent_id',
-        'slug',
-        'summary',
-        'priority',
-    ];
+    protected $guarded = [];
 
     /**
      * Get a page's parent
@@ -72,6 +63,46 @@ class Page extends Model
             "crop" => "fill",
             "gravity" => "auto",
             "fetch_format" => "auto",
+        ]);
+    }
+
+    /**
+     * Add required items to the breadcrumb seed
+     *
+     * @return array
+     */
+    public function seeds()
+    {
+        $trail = collect([]);
+
+        $this->seedParent($trail, $this);
+
+        return array_merge(parent::seeds(), $trail->all(), [
+            [
+                'name' => $this->navTitle,
+                'url' => route('pages.show', [$this->full_url]),
+            ],
+        ]);
+    }
+
+    /**
+     * Recursively add parent pages to the breadcrumb seed
+     *
+     * @param Illuminate\Support\Collection $seed
+     * @param Dewsign\NovaPages\Models\Page $item
+     * @return Illuminate\Support\Collection
+     */
+    private function seedParent(&$seed, $item)
+    {
+        if (!$parent = $item->parent) {
+            return;
+        }
+
+        $this->seedParent($seed, $parent);
+
+        $seed->push([
+            'name' => $parent->h1,
+            'url' => $parent->full_path,
         ]);
     }
 
