@@ -7,8 +7,12 @@ use Illuminate\Routing\Router;
 use Dewsign\NovaPages\Models\Page;
 use Illuminate\Pagination\Paginator;
 use Dewsign\NovaPages\Nova\Repeaters;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Dewsign\NovaPages\Http\Middleware\ServePages;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Dewsign\NovaPages\Events\NovaPagesProviderRegistered;
 
 class PackageServiceProvider extends ServiceProvider
 {
@@ -24,10 +28,10 @@ class PackageServiceProvider extends ServiceProvider
         $this->bootAssets();
         $this->bootCommands();
         $this->publishDatabaseFiles();
-        $this->registerWebRoutes();
         $this->registerMorphMaps();
         $this->configurePagination();
         $this->loadTranslations();
+        $this->bootRoutes();
     }
 
     /**
@@ -130,16 +134,6 @@ class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * Load Web Routes into the application
-     *
-     * @return void
-     */
-    private function registerWebRoutes()
-    {
-        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
-    }
-
-    /**
      * Register the Mophmaps
      *
      * @return void
@@ -164,5 +158,24 @@ class PackageServiceProvider extends ServiceProvider
     private function loadTranslations()
     {
         $this->loadJSONTranslationsFrom(__DIR__.'/../Resources/lang', 'novapages');
+    }
+
+    /**
+     * Ensure the catch-all routes for pages are loaded after all other routes
+     *
+     * @return void
+     */
+    private function bootRoutes()
+    {
+        Event::listen(NovaPagesProviderRegistered::class, function () {
+            $this->app->register(RouteServiceProvider::class);
+        });
+
+        if ($this->app->runningInConsole()) {
+            $this->app->register(RouteServiceProvider::class);
+        }
+
+        $this->app->make(HttpKernel::class)
+            ->pushMiddleware(ServePages::class);
     }
 }
