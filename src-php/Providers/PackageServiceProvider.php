@@ -47,7 +47,7 @@ class PackageServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             $this->getConfigsPath(),
-            'NovaPages'
+            'novapages'
         );
     }
 
@@ -59,7 +59,7 @@ class PackageServiceProvider extends ServiceProvider
     private function publishConfigs()
     {
         $this->publishes([
-            $this->getConfigsPath() => config_path('NovaPages.php'),
+            $this->getConfigsPath() => config_path('novapages.php'),
         ], 'config');
     }
 
@@ -70,7 +70,7 @@ class PackageServiceProvider extends ServiceProvider
      */
     private function getConfigsPath()
     {
-        return __DIR__.'/../Config/NovaPages.php';
+        return __DIR__.'/../Config/novapages.php';
     }
 
     /**
