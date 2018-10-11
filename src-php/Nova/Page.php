@@ -13,10 +13,10 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
-use Dewsign\NovaPages\Nova\Repeaters;
 use Naxon\NovaFieldSortable\Sortable;
 use Benjaminhirsch\NovaSlugField\Slug;
 use Laravel\Nova\Fields\BelongsToMany;
+use Dewsign\NovaPages\Nova\PageRepeaters;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Dewsign\NovaPages\Nova\Filters\PageType;
 use Benjaminhirsch\NovaSlugField\TextWithSlug;
@@ -80,7 +80,7 @@ class Page extends Resource
             CloudinaryImage::make('Image'),
             Textarea::make('Summary'),
             HasMany::make('Child Pages', 'children', Page::class),
-            MorphMany::make(__('Repeaters'), 'repeaters', Repeaters::class),
+            MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
             MetaAttributes::make(),
         ];
     }

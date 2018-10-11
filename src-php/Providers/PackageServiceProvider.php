@@ -6,9 +6,9 @@ use Laravel\Nova\Nova;
 use Illuminate\Routing\Router;
 use Dewsign\NovaPages\Models\Page;
 use Illuminate\Pagination\Paginator;
-use Dewsign\NovaPages\Nova\Repeaters;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Dewsign\NovaPages\Nova\PageRepeaters;
 use Dewsign\NovaPages\Http\Middleware\ServePages;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -42,7 +42,7 @@ class PackageServiceProvider extends ServiceProvider
     public function register()
     {
         Nova::resources([
-            Repeaters::class,
+            PageRepeaters::class,
         ]);
 
         $this->mergeConfigFrom(
