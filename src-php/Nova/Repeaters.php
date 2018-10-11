@@ -18,9 +18,13 @@ class Repeaters extends Repeater
     // What type of repeater blocks should be made available
     public function types(Request $request)
     {
-        return [
+        if (config('novapages.replaceRepeaters', false)) {
+            return config('novapages.repeaters');
+        }
+
+        return array_merge([
             TextBlock::class,
             TextareaBlock::class,
-        ];
+        ], config('novapages.repeaters'));
     }
 }
