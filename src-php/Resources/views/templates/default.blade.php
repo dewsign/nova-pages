@@ -1,0 +1,1 @@
+@include('nova-pages::show')

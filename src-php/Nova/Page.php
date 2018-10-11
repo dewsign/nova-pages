@@ -7,6 +7,8 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
+use Dewsign\NovaPages\NovaPages;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
@@ -68,6 +70,7 @@ class Page extends Resource
     {
         return [
             ID::make()->sortable(),
+            $this->templateOptions(),
             Boolean::make('Active')->sortable()->rules('required', 'boolean'),
             Boolean::make('Featured')->sortable()->rules('required', 'boolean'),
             Number::make('Priority')->sortable()->rules('required_if:active,1', 'nullable', 'integer'),
@@ -83,6 +86,22 @@ class Page extends Resource
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
             MetaAttributes::make(),
         ];
+    }
+
+    private function templateOptions()
+    {
+        $options = NovaPages::availableTemplates();
+
+        if (count($options) <= 1) {
+            return $this->merge([]);
+        }
+
+        return $this->merge([
+            Select::make('Template')
+                ->options($options)
+                ->displayUsingLabels()
+                ->hideFromIndex(),
+        ]);
     }
 
     /**
