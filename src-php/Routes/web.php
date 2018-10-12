@@ -9,5 +9,5 @@ Route::name('pages.')->group(function () {
     Route::get('{path}', 'PageController@show')
         ->name('show')
         ->where(['path' => '^(?!' . $nova_url  . '|nova-api|nova-vendor).*'])
-        ->defaults('path', '');
+        ->defaults('path', config('novapages.homepageSlug', 'homepage'));
 });
