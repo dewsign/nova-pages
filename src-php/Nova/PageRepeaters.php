@@ -5,8 +5,11 @@ namespace Dewsign\NovaPages\Nova;
 use Illuminate\Http\Request;
 use Dewsign\NovaPages\Nova\Page;
 use Dewsign\NovaRepeaterBlocks\Fields\Repeater;
+use Dewsign\NovaRepeaterBlocks\Repeaters\Common\Blocks\CustomViewBlock;
 use Dewsign\NovaRepeaterBlocks\Repeaters\Common\Blocks\TextBlock;
+use Dewsign\NovaRepeaterBlocks\Repeaters\Common\Blocks\ImageBlock;
 use Dewsign\NovaRepeaterBlocks\Repeaters\Common\Blocks\TextareaBlock;
+use Dewsign\NovaRepeaterBlocks\Repeaters\Common\Blocks\MarkdownBlock;
 
 class PageRepeaters extends Repeater
 {
@@ -23,8 +26,11 @@ class PageRepeaters extends Repeater
         }
 
         return array_merge([
+            CustomViewBlock::class,
+            ImageBlock::class,
             TextBlock::class,
             TextareaBlock::class,
+            MarkdownBlock::class,
         ], config('novapages.repeaters'));
     }
 }
