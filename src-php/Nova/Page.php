@@ -73,7 +73,7 @@ class Page extends Resource
             $this->templateOptions(),
             Boolean::make('Active')->sortable()->rules('required', 'boolean'),
             Boolean::make('Featured')->sortable()->rules('required', 'boolean'),
-            Number::make('Priority')->sortable()->rules('required_if:active,1', 'nullable', 'integer'),
+            Number::make('Priority')->sortable()->rules('required', 'nullable', 'integer'),
             TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('Slug'),
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
             BelongsTo::make('Parent', 'parent', Page::class)->searchable(),
