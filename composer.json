@@ -19,7 +19,8 @@
         "silvanite/nova-field-cloudinary": "^1.0",
         "dewsign/nova-repeater-blocks": "dev-master",
         "epartment/nova-dependency-container": "^1.1",
-        "silvanite/brandenburg": "^1.0"
+        "silvanite/brandenburg": "^1.0",
+        "babenkoivan/scout-elasticsearch-driver": "^3.8"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": ">=3.1"
