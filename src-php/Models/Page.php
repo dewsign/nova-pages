@@ -101,8 +101,8 @@ class Page extends Model
         }
 
         return cloudinary_image($this->image, [
-            "width" => novapages.largeImageWidth,
-            "height" => novapages.largeImageHeight,
+            "width" => config('novapages.largeImageWidth'),
+            "height" => config('novapages.largeImageHeight'),
             "crop" => "fill",
             "gravity" => "auto",
             "fetch_format" => "auto",
