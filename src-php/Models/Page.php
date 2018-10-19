@@ -53,7 +53,7 @@ class Page extends Model
         $this->repeaters;
 
         $searchable = $this->toArray();
-        
+
         $searchable = array_except($searchable, [
             'active',
             'browser_title',
@@ -63,7 +63,7 @@ class Page extends Model
             'canonical',
             'parent',
         ]);
-            
+
         return $searchable;
     }
 
@@ -152,5 +152,27 @@ class Page extends Model
     public function baseCanonical()
     {
         return request()->url();
+    }
+
+    /**
+     * Return a page object to allow customising of meta fields for non-dynamic pages.
+     * E.g. blog index page. Pass in a default string or array incase no matching page exists.
+     *
+     * @param string $slug
+     * @param string|array $default
+     * @return Collection|array
+     */
+    public static function meta(string $slug, $default = null)
+    {
+        if (!is_array($default)) {
+            $default = [
+                'page_title' => $default,
+                'browser_title' => $default,
+                'meta_description' => $default,
+                'h1' => $default,
+            ];
+        }
+
+        return self::withParent()->whereFullPath($slug)->first() ?? $default;
     }
 }
