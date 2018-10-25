@@ -25,7 +25,6 @@ class PageController extends Controller
 
         return View::first([
             $page->template ? "nova-pages::templates.{$page->template}" : null,
-            'pages.show',
             'nova-pages::show',
         ])
         ->with('page', $page);
