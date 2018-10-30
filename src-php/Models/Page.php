@@ -74,6 +74,15 @@ class Page extends Model
      */
     protected $guarded = [];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->domainMappedFolders = config('novapages.domainMap');
+
+        parent::__construct($attributes);
+    }
+
+    protected $domainMappedFolders = [];
+
     /**
      * Get a page's parent
      *
