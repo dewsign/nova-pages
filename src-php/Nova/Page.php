@@ -59,6 +59,13 @@ class Page extends Resource
         return __('Pages');
     }
 
+    public static function newModel()
+    {
+        $model = config('novapages.models.page', static::$model);
+
+        return new $model;
+    }
+
     /**
      * Get the fields displayed by the resource.
      *

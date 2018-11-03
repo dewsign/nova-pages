@@ -18,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Page::class => PagePolicy::class,
+        // Page::class => PagePolicy::class,
     ];
 
     /**
@@ -42,5 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $this->registerPolicies();
+
+        Gate::policy(config('novapages.models.page', Page::class), PagePolicy::class);
     }
 }

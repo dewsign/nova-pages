@@ -2,7 +2,7 @@
 
 namespace Dewsign\NovaPages;
 
-use Dewsign\NovaPages\Models\Page;
+use Dewsign\NovaPages\Facades\Page;
 use Illuminate\Support\Facades\File;
 
 class NovaPages

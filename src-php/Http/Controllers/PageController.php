@@ -2,7 +2,7 @@
 
 namespace Dewsign\NovaPages\Http\Controllers;
 
-use Dewsign\NovaPages\Models\Page;
+use Dewsign\NovaPages\Facades\Page;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Foundation\Bus\DispatchesJobs;

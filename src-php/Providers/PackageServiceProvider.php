@@ -4,7 +4,7 @@ namespace Dewsign\NovaPages\Providers;
 
 use Laravel\Nova\Nova;
 use Illuminate\Routing\Router;
-use Dewsign\NovaPages\Models\Page;
+use Dewsign\NovaPages\Facades\Page;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -32,6 +32,8 @@ class PackageServiceProvider extends ServiceProvider
         $this->configurePagination();
         $this->loadTranslations();
         $this->bootRoutes();
+
+        $this->app->bind('novapages.page', config('novapages.models.page', 'Dewsign\NovaPages\Models\Page'));
     }
 
     /**
