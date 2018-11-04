@@ -42,7 +42,5 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $this->registerPolicies();
-
-        Gate::policy(config('novapages.models.page', Page::class), PagePolicy::class);
     }
 }
