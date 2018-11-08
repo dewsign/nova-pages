@@ -54,6 +54,16 @@ class Page extends Resource
 
     public static $group = 'Pages';
 
+    /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return config('novapages.group', static::$group);
+    }
+
     public static function label()
     {
         return __('Pages');

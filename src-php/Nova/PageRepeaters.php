@@ -13,10 +13,10 @@ use Dewsign\NovaRepeaterBlocks\Repeaters\Common\Blocks\MarkdownBlock;
 
 class PageRepeaters extends Repeater
 {
-    // One or more Nova Resources which use this Repeater
-    public static $morphTo = [
-        Page::class,
-    ];
+    public static function morphTo()
+    {
+        return config('novapages.resources.page', Page::class);
+    }
 
     // What type of repeater blocks should be made available
     public function types(Request $request)

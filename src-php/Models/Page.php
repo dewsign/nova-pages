@@ -2,7 +2,6 @@
 
 namespace Dewsign\NovaPages\Models;
 
-use ScoutElastic\Searchable;
 use Maxfactor\Support\Webpage\Model;
 use Illuminate\Support\Facades\Route;
 use Maxfactor\Support\Webpage\Traits\HasSlug;
@@ -13,59 +12,17 @@ use Maxfactor\Support\Model\Traits\WithPrioritisation;
 use Maxfactor\Support\Webpage\Traits\HasMetaAttributes;
 use Maxfactor\Support\Webpage\Traits\MustHaveCanonical;
 use Dewsign\NovaRepeaterBlocks\Traits\HasRepeaterBlocks;
-use Dewsign\NovaPages\IndexConfigurators\PageIndexConfigurator;
 
 class Page extends Model
 {
     use HasSlug;
     use HasParent;
-    use Searchable;
     use CanBeFeatured;
     use HasActiveState;
     use HasMetaAttributes;
     use HasRepeaterBlocks;
     use MustHaveCanonical;
     use WithPrioritisation;
-
-    protected $indexConfigurator = PageIndexConfigurator::class;
-
-    // Mapping for a model fields.
-    protected $mapping = [
-        'properties' => [
-            'text' => [
-                'type' => 'text',
-                'fields' => [
-                    'raw' => [
-                        'type' => 'keyword',
-                    ]
-                ]
-            ],
-        ]
-    ];
-
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-    public function toSearchableArray()
-    {
-        $this->repeaters;
-
-        $searchable = $this->toArray();
-
-        $searchable = array_except($searchable, [
-            'active',
-            'browser_title',
-            'h1',
-            'meta_description',
-            'nav_title',
-            'canonical',
-            'parent',
-        ]);
-
-        return $searchable;
-    }
 
     /**
      * The attributes that are mass assignable.
@@ -81,7 +38,7 @@ class Page extends Model
      */
     public function parent()
     {
-        return $this->belongsTo(Page::class);
+        return $this->belongsTo(config('novapages.models.page', Page::class));
     }
 
     /**
@@ -91,22 +48,7 @@ class Page extends Model
      */
     public function children()
     {
-        return $this->hasMany(Page::class, 'parent_id', 'id');
-    }
-
-    public function getFeaturedImageLargeAttribute()
-    {
-        if (!$this->image) {
-            return null;
-        }
-
-        return cloudinary_image($this->image, [
-            "width" => config('novapages.largeImageWidth'),
-            "height" => config('novapages.largeImageHeight'),
-            "crop" => "fill",
-            "gravity" => "auto",
-            "fetch_format" => "auto",
-        ]);
+        return $this->hasMany(config('novapages.models.page', Page::class), 'parent_id', 'id');
     }
 
     /**
@@ -151,7 +93,7 @@ class Page extends Model
 
     public function baseCanonical()
     {
-        return request()->url();
+        return route('pages.show', [$this->full_url]);
     }
 
     /**
