@@ -59,7 +59,7 @@ You can define which page slug should be loaded as the homepage, accessible at `
 
 ### Customisation
 
-If you want more control, you can specify which Nova Resource and Page model to use. Not, because of the way nova reads the model from a static variable you must provide your own custom resource if you want to use a custom model.
+If you want more control, you can specify which Nova Resource and Page model to use. Because of the way nova reads the model from a static variable you must provide your own custom resource if you want to use a custom model.
 
 ```php
 'models' => [
