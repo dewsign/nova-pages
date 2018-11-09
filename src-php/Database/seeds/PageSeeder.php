@@ -17,14 +17,14 @@ class PageSeeder extends Seeder
      */
     public function run()
     {
-        factory($pageClass = config('novapages.models.page', Page::class), 100)->create()->each(function ($page) {
+        factory(config('novapages.models.page', Page::class), 100)->create()->each(function ($page) {
             $page->repeaters()->saveMany(factory(Repeater::class, rand(0, 5))->create()->each(function ($repeater) {
                 $repeater->type()->associate(factory(AvailableBlocks::random())->create())->save();
             }));
         });
 
-        app($pageClass)::inRandomOrder()->take(rand(25, 75))->get()->each(function ($page) {
-            $page->parent()->associate(app($pageClass)::inRandomOrder()->where('id', '<>', $page->id)->first());
+        config('novapages.models.page', Page::class)::inRandomOrder()->take(rand(25, 75))->get()->each(function ($page) {
+            $page->parent()->associate(config('novapages.models.page', Page::class)::inRandomOrder()->where('id', '<>', $page->id)->first());
             $page->save();
         });
     }
