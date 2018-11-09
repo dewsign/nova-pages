@@ -31,6 +31,15 @@ class Page extends Model
      */
     protected $guarded = [];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->domainMappedFolders = config('novapages.domainMap');
+
+        parent::__construct($attributes);
+    }
+
+    protected $domainMappedFolders = [];
+
     /**
      * Get a page's parent
      *
@@ -65,7 +74,7 @@ class Page extends Model
         return array_merge(parent::seeds(), $trail->all(), [
             [
                 'name' => $this->navTitle,
-                'url' => route('pages.show', [$this->full_url]),
+                'url' => $this->full_url,
             ],
         ]);
     }

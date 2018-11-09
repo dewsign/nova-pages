@@ -13,7 +13,7 @@ class PageController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function show(string $path)
+    public function show(string $domain = null, string $path = null)
     {
         $page = app(config('novapages.models.page', Page::class))::withParent()
             ->whereFullPath($path)

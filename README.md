@@ -107,3 +107,20 @@ A PagePolicy is included, but not loaded by default, for [Brandenburg](https://g
     Dewsign\NovaPages\Providers\AuthServiceProvider::class,
 ],
 ```
+
+## Domain Maps
+
+You can map sub-domain (e.g. careers.mydomain.com) to Pages to automatically remove the slug and serve it on the domain instead by adding the slugs to the `domainMap` array in the configuration file.
+
+```php
+return [
+    ...
+    'domainMap' => [
+        'careers',
+    ],
+];
+```
+
+If you create a page with the `careers` slug, this and any sub-pages will be served on the sub-domain with the base slug removed. E.g. `mydomain.com/careers/vacancies` will become `careers.mydomain.com/vacancies`.
+
+NOTE: The domain name routing is not handled by this package, only the removal of the slug, your application will need to take care of the domain name handling.

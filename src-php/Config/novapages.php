@@ -15,4 +15,6 @@ return [
         'field' => 'Laravel\Nova\Fields\Image',
         'disk' => 'public',
     ],
+    'domainMap' => [],
+    'rootDomain' => config('session.domain'),
 ];
