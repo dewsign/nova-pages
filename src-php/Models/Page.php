@@ -74,7 +74,7 @@ class Page extends Model
         return array_merge(parent::seeds(), $trail->all(), [
             [
                 'name' => $this->navTitle,
-                'url' => $this->full_url,
+                'url' => $this->full_path,
             ],
         ]);
     }
@@ -102,7 +102,7 @@ class Page extends Model
 
     public function baseCanonical()
     {
-        return route('pages.show', [$this->full_url]);
+        return $this->full_path;
     }
 
     /**
