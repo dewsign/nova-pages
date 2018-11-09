@@ -22,6 +22,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Dewsign\NovaPages\Nova\Filters\PageType;
 use Benjaminhirsch\NovaSlugField\TextWithSlug;
 use Dewsign\NovaPages\Nova\Filters\ActiveState;
+use Maxfactor\Support\Webpage\Nova\MetaAttributes;
 
 class Page extends Resource
 {
