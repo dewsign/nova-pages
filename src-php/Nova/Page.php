@@ -22,7 +22,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Dewsign\NovaPages\Nova\Filters\PageType;
 use Benjaminhirsch\NovaSlugField\TextWithSlug;
 use Dewsign\NovaPages\Nova\Filters\ActiveState;
-use Maxfactor\Support\Webpage\Nova\MetaAttributes;
 
 class Page extends Resource
 {
@@ -84,13 +83,13 @@ class Page extends Resource
             Number::make('Priority')->sortable()->rules('required', 'integer'),
             TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('Slug'),
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
-            BelongsTo::make('Parent', 'parent', Page::class)->searchable(),
+            BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable(),
             Text::make('Full Path', function () {
                 return $this->full_path;
             })->hideFromIndex(),
             config('novablog.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
             Textarea::make('Summary'),
-            HasMany::make('Child Pages', 'children', Page::class),
+            HasMany::make('Child Pages', 'children', self::class),
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
             MetaAttributes::make(),
         ];
