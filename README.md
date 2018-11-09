@@ -97,12 +97,13 @@ public function run()
 
 ## Permissions
 
-A PagePolicy is included, but not loaded by default, for [Brandenburg](https://github.com/Silvanite/brandenburg) / [Nova Tool](https://github.com/Silvanite/novatoolpermissions). Simply assign the policy to the pages model if you wish to use it.
+A PagePolicy is included, but not loaded by default, for [Brandenburg](https://github.com/Silvanite/brandenburg) / [Nova Tool](https://github.com/Silvanite/novatoolpermissions). Simply load the AuthServiceProvider from this package.
 
 ```php
-// AuthServiceProvider.php
+// config/app.php
 
-protected $policies = [
-    Dewsign\NovaPages\Models\Page::class => Dewsign\NovaPages\Policies\PagePolicy::class,
-];
+'providers' => [
+    ...
+    Dewsign\NovaPages\Providers\AuthServiceProvider::class,
+],
 ```
