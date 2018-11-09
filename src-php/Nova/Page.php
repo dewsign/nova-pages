@@ -23,7 +23,6 @@ use Dewsign\NovaPages\Nova\Filters\PageType;
 use Benjaminhirsch\NovaSlugField\TextWithSlug;
 use Dewsign\NovaPages\Nova\Filters\ActiveState;
 use Maxfactor\Support\Webpage\Nova\MetaAttributes;
-use Silvanite\NovaFieldCloudinary\Fields\CloudinaryImage;
 
 class Page extends Resource
 {
@@ -54,6 +53,16 @@ class Page extends Resource
 
     public static $group = 'Pages';
 
+    /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return config('novapages.group', static::$group);
+    }
+
     public static function label()
     {
         return __('Pages');
@@ -79,7 +88,7 @@ class Page extends Resource
             Text::make('Full Path', function () {
                 return $this->full_path;
             })->hideFromIndex(),
-            CloudinaryImage::make('Image'),
+            config('novablog.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
             Textarea::make('Summary'),
             HasMany::make('Child Pages', 'children', Page::class),
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),

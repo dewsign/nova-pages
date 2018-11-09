@@ -15,7 +15,7 @@ class NovaPagesTool extends NovaTool
     public function boot()
     {
         Nova::resources([
-            Page::class,
+            config('novapages.resources.page', Page::class),
         ]);
     }
 }

@@ -141,7 +141,7 @@ class PackageServiceProvider extends ServiceProvider
     private function registerMorphmaps()
     {
         Relation::morphMap([
-            'novapages.page' => Page::class,
+            'novapages.page' => config('novapages.models.page', Page::class),
         ]);
     }
 

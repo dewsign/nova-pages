@@ -3,7 +3,7 @@
 use Faker\Generator as Faker;
 use Dewsign\NovaPages\Models\Page;
 
-$factory->define(Page::class, function (Faker $faker) {
+$factory->define(config('novapages.models.page', Page::class), function (Faker $faker) {
     return [
         'active' => $faker->boolean(90),
         'featured' => $faker->boolean(20),
