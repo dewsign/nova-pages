@@ -4,8 +4,17 @@ return [
     'repeaters' => [],
     'replaceRepeaters' => false,
     'homepageSlug' => 'homepage',
-    'largeImageWidth' => 1600,
-    'largeImageHeight' => 900,
+    'models' => [
+        'page' => 'Dewsign\NovaPages\Models\Page',
+    ],
+    'resources' => [
+        'page' => 'Dewsign\NovaPages\Nova\Page',
+    ],
+    'group' => 'Pages',
+    'images' => [
+        'field' => 'Laravel\Nova\Fields\Image',
+        'disk' => 'public',
+    ],
     'domainMap' => [],
     'rootDomain' => config('session.domain'),
 ];

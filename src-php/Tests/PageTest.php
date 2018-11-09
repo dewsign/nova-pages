@@ -12,7 +12,11 @@ abstract class PageTest extends TestCase
     public function testRandomRootPageIsAccessible()
     {
         $result = $this->get(route('pages.show', [
-            Page::active()->doesntHave('parent')->inRandomOrder()->first()->full_path,
+            app(config('novapages.models.page', Page::class))::active()
+                ->doesntHave('parent')
+                ->inRandomOrder()
+                ->first()
+                ->full_path,
         ]));
 
         $result->assertOk();
@@ -21,7 +25,11 @@ abstract class PageTest extends TestCase
     public function testRandomChildPageIsAccessible()
     {
         $result = $this->get(route('pages.show', [
-            Page::active()->has('parent')->inRandomOrder()->first()->full_path,
+            app(config('novapages.models.page', Page::class))::active()
+                ->has('parent')
+                ->inRandomOrder()
+                ->first()
+                ->full_path,
         ]));
 
         $result->assertOk();
