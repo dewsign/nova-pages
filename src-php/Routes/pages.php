@@ -2,7 +2,7 @@
 
 $nova_url = ltrim(config('nova.path'), '/');
 
-Route::get('{path}', 'PageController@show')
+Route::get('{path?}', 'PageController@show')
     ->name('show')
     ->where(['path' => '^(?!' . $nova_url  . '|nova-api|nova-vendor).*'])
     ->defaults('domain', '')
