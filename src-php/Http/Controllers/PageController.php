@@ -15,6 +15,10 @@ class PageController extends Controller
 
     public function show(string $domain = null, string $path = null)
     {
+        if (!$path) {
+            $path = $domain;
+        }
+
         $page = app(config('novapages.models.page', Page::class))::withParent()
             ->whereFullPath($path)
             ->first();
