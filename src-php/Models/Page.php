@@ -4,6 +4,7 @@ namespace Dewsign\NovaPages\Models;
 
 use Maxfactor\Support\Webpage\Model;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Builder;
 use Maxfactor\Support\Webpage\Traits\HasSlug;
 use Maxfactor\Support\Webpage\Traits\HasParent;
 use Maxfactor\Support\Model\Traits\CanBeFeatured;
@@ -31,9 +32,12 @@ class Page extends Model
      */
     protected $guarded = [];
 
+    protected $homepageSlug;
+
     public function __construct(array $attributes = [])
     {
         $this->domainMappedFolders = config('novapages.domainMap');
+        $this->homepageSlug = config('novapages.homepageSlug', 'homepage');
 
         parent::__construct($attributes);
     }
@@ -125,5 +129,56 @@ class Page extends Model
         }
 
         return self::withParent()->whereFullPath($slug)->first() ?? $default;
+    }
+
+    /**
+     * Overload default method to exclude the homepage slug from the full path
+     *
+     * @return string Full path
+     */
+    public function getFullPathAttribute()
+    {
+        $pathSections = explode('/', $this->getFullPath());
+
+        $slugsToExclude = array_merge(
+            array_wrap($this->domainMappedFolders),
+            array_wrap($this->homepageSlug)
+        );
+
+        $finalSlug = collect($pathSections)
+            ->filter()
+            ->reject(function ($slug) use ($slugsToExclude) {
+                return in_array($slug, $slugsToExclude);
+            })
+            ->implode('/');
+
+        return str_start($finalSlug, '/');
+    }
+
+
+    /**Overload scope to add additional cnditions for the homepage slug
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $path Full path
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhereFullPath(Builder $query, string $path)
+    {
+        $itemSlugs = explode('/', $path);
+
+        $slugsToExclude = array_wrap($this->homepageSlug);
+
+        $finalSlug = collect($itemSlugs)
+            ->filter()
+            ->reject(function ($slug) use ($slugsToExclude) {
+                return in_array($slug, $slugsToExclude);
+            })
+            ->implode('/');
+
+        return $query->where('slug', '=', end($itemSlugs))
+            ->get()
+            ->filter(function ($item) use ($finalSlug) {
+                return $item->full_path === str_start($finalSlug, '/');
+            });
     }
 }
