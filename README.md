@@ -6,7 +6,7 @@ Pages can be nested (as many levels deep as required), e.g. `/page-one/page-two/
 
 ## Installation
 
-`composer require dewsign\nova-pages`
+`composer require dewsign/nova-pages`
 
 Run the migrations
 
