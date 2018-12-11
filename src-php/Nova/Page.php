@@ -88,7 +88,7 @@ class Page extends Resource
             Text::make('Full Path', function () {
                 return $this->full_path;
             })->hideFromIndex(),
-            config('novablog.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
+            config('novapages.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
             Textarea::make('Summary'),
             HasMany::make('Child Pages', 'children', self::class),
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
