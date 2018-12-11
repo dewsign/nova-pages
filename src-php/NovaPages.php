@@ -10,7 +10,7 @@ class NovaPages
     public static function sitemap($sitemap)
     {
         app(config('novapages.models.page', Page::class))::active()->get()->map(function ($item) use ($sitemap) {
-            $sitemap->add(route('pages.show', [$item->full_path]));
+            $sitemap->add(url($item->full_path));
         });
     }
 
