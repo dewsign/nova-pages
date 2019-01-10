@@ -19,7 +19,7 @@ class PageSeeder extends Seeder
     {
         factory(config('novapages.models.page', Page::class), 100)->create()->each(function ($page) {
             $page->repeaters()->saveMany(factory(Repeater::class, rand(0, 5))->create()->each(function ($repeater) {
-                $repeater->type()->associate(factory(AvailableBlocks::random())->create())->save();
+                $repeater->type()->associate(factory(AvailableBlocks::random()::$model)->create())->save();
             }));
         });
 
