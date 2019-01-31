@@ -77,7 +77,7 @@ class Page extends Model
 
         return array_merge(parent::seeds(), $trail->all(), [
             [
-                'name' => $this->navTitle,
+                'name' => $this->h1,
                 'url' => $this->full_path,
             ],
         ]);
