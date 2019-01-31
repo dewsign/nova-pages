@@ -99,7 +99,7 @@ class Page extends Model
         $this->seedParent($seed, $parent);
 
         $seed->push([
-            'name' => $parent->h1,
+            'name' => $parent->navTitle,
             'url' => $parent->full_path,
         ]);
     }
