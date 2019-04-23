@@ -84,7 +84,7 @@ class Page extends Resource
             Number::make('Priority')->sortable()->rules('required', 'integer'),
             TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('Slug'),
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
-            BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable(),
+            BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable()->rules('not_in:{{resourceId}}'),
             Text::make('Full Path', function () {
                 return $this->full_path;
             })->hideFromIndex(),
