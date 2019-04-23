@@ -13,6 +13,7 @@ use Dewsign\NovaPages\Http\Middleware\ServePages;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Dewsign\NovaPages\Events\NovaPagesProviderRegistered;
+use Dewsign\NovaPages\Http\Middleware\RedirectHomepageSlugToRoot;
 
 class PackageServiceProvider extends ServiceProvider
 {
@@ -31,7 +32,7 @@ class PackageServiceProvider extends ServiceProvider
         $this->registerMorphMaps();
         $this->configurePagination();
         $this->loadTranslations();
-        $this->bootRoutes();
+        $this->bootRoutes($router);
     }
 
     /**
@@ -165,7 +166,7 @@ class PackageServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function bootRoutes()
+    private function bootRoutes(Router $router)
     {
         Event::listen(NovaPagesProviderRegistered::class, function () {
             $this->app->register(RouteServiceProvider::class);
@@ -177,5 +178,7 @@ class PackageServiceProvider extends ServiceProvider
 
         $this->app->make(HttpKernel::class)
             ->pushMiddleware(ServePages::class);
+
+        $router->pushMiddlewareToGroup('web', RedirectHomepageSlugToRoot::class);
     }
 }
