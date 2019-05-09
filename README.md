@@ -123,4 +123,4 @@ return [
 
 If you create a page with the `careers` slug, this and any sub-pages will be served on the sub-domain with the base slug removed. E.g. `mydomain.com/careers/vacancies` will become `careers.mydomain.com/vacancies`.
 
-NOTE: The domain name routing is not handled by this package, only the removal of the slug, your application will need to take care of the domain name handling.
+*Important: You will need to ensure that any non-page routes go to the the correct domain name. We recommend always routing to full URLs rather than relative path.*
