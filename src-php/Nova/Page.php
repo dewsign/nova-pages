@@ -86,7 +86,7 @@ class Page extends Resource
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
             BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable()->rules('not_in:{{resourceId}}'),
             Text::make('Full Path', function () {
-                return $this->full_path;
+                return $this->mapped_url;
             })->hideFromIndex(),
             config('novapages.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
             Textarea::make('Summary'),
