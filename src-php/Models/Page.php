@@ -78,7 +78,7 @@ class Page extends Model
         return array_merge(parent::seeds(), $trail->all(), [
             [
                 'name' => $this->h1,
-                'url' => $this->full_path,
+                'url' => $this->mapped_url,
             ],
         ]);
     }
@@ -100,13 +100,13 @@ class Page extends Model
 
         $seed->push([
             'name' => $parent->navTitle,
-            'url' => $parent->full_path,
+            'url' => $parent->mapped_url,
         ]);
     }
 
     public function baseCanonical()
     {
-        return $this->full_path;
+        return $this->mapped_url;
     }
 
     /**
@@ -155,6 +155,46 @@ class Page extends Model
         return str_start($finalSlug, '/');
     }
 
+    /**
+     * Checks to see if the first part of the path is within the domain map.
+     * Returns false or the full url of the desired page.
+     *
+     * @return array
+     */
+    public static function isWithinDomainMap($domain = null, $path = '')
+    {
+        if (!$page = static::withParent()->whereFullPath($path, $excludeMappedDomain = false)->first()) {
+            return false;
+        };
+        
+        if ($page->full_path !== $page->getFullPath()) {
+            return $page->mapped_url;
+        };
+
+        return false;
+    }
+
+    /**
+     * Returns the full URL of the page mapped to sub-domains where appropriate.
+     *
+     * @return string
+     */
+    public function getMappedUrlAttribute()
+    {
+        $pathSections = collect(explode('/', $this->getFullPath()))->filter();
+        $mappedFolders = collect(array_wrap($this->domainMappedFolders));
+
+        if ($mappedFolders->contains($pathSections->first())) {
+            return route('domain.pages.show', [
+                'domain' => $pathSections->first(),
+                'path' => $this->full_path,
+            ]);
+        }
+
+        return route('pages.show', [
+            'path' => $this->full_path,
+        ]);
+    }
 
     /**Overload scope to add additional cnditions for the homepage slug
      *
@@ -162,7 +202,7 @@ class Page extends Model
      * @param string $path Full path
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereFullPath(Builder $query, string $path)
+    public function scopeWhereFullPath(Builder $query, string $path, bool $excludeMappedDomains = true)
     {
         $itemSlugs = explode('/', $path);
 
@@ -170,14 +210,22 @@ class Page extends Model
 
         $finalSlug = collect($itemSlugs)
             ->filter()
-            ->reject(function ($slug) use ($slugsToExclude) {
+            ->reject(function ($slug) use ($slugsToExclude, $excludeMappedDomains) {
+                if (!$excludeMappedDomains) {
+                    return false;
+                }
+
                 return in_array($slug, $slugsToExclude);
             })
             ->implode('/');
 
         return $query->where('slug', '=', end($itemSlugs))
             ->get()
-            ->filter(function ($item) use ($finalSlug) {
+            ->filter(function ($item) use ($finalSlug, $excludeMappedDomains) {
+                if (!$excludeMappedDomains) {
+                    return $item->getFullPath() === str_start($finalSlug, '/');
+                }
+
                 return $item->full_path === str_start($finalSlug, '/');
             });
     }
