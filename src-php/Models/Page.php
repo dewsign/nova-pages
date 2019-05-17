@@ -3,7 +3,6 @@
 namespace Dewsign\NovaPages\Models;
 
 use Maxfactor\Support\Webpage\Model;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Builder;
 use Maxfactor\Support\Webpage\Traits\HasSlug;
 use Maxfactor\Support\Webpage\Traits\HasParent;
@@ -32,8 +31,25 @@ class Page extends Model
      */
     protected $guarded = [];
 
+    /**
+     * This variable holds the homepage slug name
+     *
+     * @var string
+     */
     protected $homepageSlug;
 
+    /**
+     * First-level slugs which should be mapped to sub-domains
+     *
+     * @var array
+     */
+    protected $domainMappedFolders = [];
+
+    /**
+     * Initialise the Model
+     *
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         $this->domainMappedFolders = config('novapages.domainMap');
@@ -41,8 +57,6 @@ class Page extends Model
 
         parent::__construct($attributes);
     }
-
-    protected $domainMappedFolders = [];
 
     /**
      * Get a page's parent
@@ -104,31 +118,15 @@ class Page extends Model
         ]);
     }
 
+    /**
+     * The default canonical to be used on pages.
+     * Returns a full url including any domain map.
+     *
+     * @return string
+     */
     public function baseCanonical()
     {
         return $this->mapped_url;
-    }
-
-    /**
-     * Return a page object to allow customising of meta fields for non-dynamic pages.
-     * E.g. blog index page. Pass in a default string or array incase no matching page exists.
-     *
-     * @param string $slug
-     * @param string|array $default
-     * @return Collection|array
-     */
-    public static function meta(string $slug, $default = null)
-    {
-        if (!is_array($default)) {
-            $default = [
-                'page_title' => $default,
-                'browser_title' => $default,
-                'meta_description' => $default,
-                'h1' => $default,
-            ];
-        }
-
-        return self::withParent()->whereFullPath($slug)->first() ?? $default;
     }
 
     /**
@@ -156,25 +154,6 @@ class Page extends Model
     }
 
     /**
-     * Checks to see if the first part of the path is within the domain map.
-     * Returns false or the full url of the desired page.
-     *
-     * @return array
-     */
-    public static function isWithinDomainMap($domain = null, $path = '')
-    {
-        if (!$page = static::withParent()->whereFullPath($path, $excludeMappedDomain = false)->first()) {
-            return false;
-        };
-        
-        if ($page->full_path !== $page->getFullPath()) {
-            return $page->mapped_url;
-        };
-
-        return false;
-    }
-
-    /**
      * Returns the full URL of the page mapped to sub-domains where appropriate.
      *
      * @return string
@@ -196,7 +175,8 @@ class Page extends Model
         ]);
     }
 
-    /**Overload scope to add additional cnditions for the homepage slug
+    /**
+     * Overload scope to add additional cnditions for the homepage slug
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $path Full path
@@ -228,5 +208,47 @@ class Page extends Model
 
                 return $item->full_path === str_start($finalSlug, '/');
             });
+    }
+
+    /**
+     * Return a page object to allow customising of meta fields for non-dynamic pages.
+     * E.g. blog index page. Pass in a default string or array incase no matching page exists.
+     *
+     * @param string $slug
+     * @param string|array $default
+     * @return Collection|array
+     */
+    public static function meta(string $slug, $default = null)
+    {
+        if (!is_array($default)) {
+            $default = [
+                'page_title' => $default,
+                'browser_title' => $default,
+                'meta_description' => $default,
+                'h1' => $default,
+            ];
+        }
+
+        return self::withParent()->whereFullPath($slug)->first() ?? $default;
+    }
+
+
+    /**
+     * Checks to see if the first part of the path is within the domain map.
+     * Returns false or the full url of the desired page.
+     *
+     * @return array
+     */
+    public static function isWithinDomainMap($domain = null, $path = '')
+    {
+        if (!$page = static::withParent()->whereFullPath($path, $excludeMappedDomain = false)->first()) {
+            return false;
+        };
+        
+        if ($page->full_path !== $page->getFullPath()) {
+            return $page->mapped_url;
+        };
+
+        return false;
     }
 }
