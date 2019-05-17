@@ -46,6 +46,9 @@ public function tools()
 | Nav Title | An option to define unique text for the page's navigation title. Default to the name field on first save. |
 | Meta Description | An option to define unique text for the page's meta description. |
 
+Using the provided scopes makes for a nice fluent API to lookup pages.  
+E.g. `Page::active()->featured()->highToLow()->take(3)->get()`.
+
 ## Templates
 
 The packages doesn't come with any pre-made templates. Simply replace the published `resources/views/vendor/nova-pages/show.blade.php` view or create new templates inside the `resources/views/vendor/nova-pages/templates` folder. When more than one template exists, a select option will be displayed within nova where you can select the template for the page.
