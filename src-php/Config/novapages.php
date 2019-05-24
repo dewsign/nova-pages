@@ -16,5 +16,5 @@ return [
         'disk' => 'public',
     ],
     'domainMap' => [],
-    'rootDomain' => config('session.domain'),
+    'rootDomain' => env('ROOT_DOMAIN', config('session.domain')),
 ];
