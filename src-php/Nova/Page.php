@@ -82,7 +82,7 @@ class Page extends Resource
             Boolean::make('Active')->sortable()->rules('required', 'boolean'),
             Boolean::make('Featured')->sortable()->rules('required', 'boolean'),
             Number::make('Priority')->sortable()->rules('required', 'integer'),
-            TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('Slug'),
+            TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('slug'),
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
             BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable()->rules('not_in:{{resourceId}}'),
             Text::make('Full Path', function () {
