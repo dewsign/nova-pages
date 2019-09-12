@@ -69,7 +69,7 @@ class Page extends Model
     }
 
     /**
-     * Get the homepage slug.
+     * Returns the slug that should be used for the homepage.
      *
      * @return string
      */
