@@ -13,7 +13,7 @@ class RedirectHomepageSlugToRoot
      */
     public function handle($request, $next)
     {
-        $homepageSlug = config('novapages.homepageSlug');
+        $homepageSlug = config('novapages.models.page')::getHomepageSlug();
 
         if ($homepageSlug && $request->is($homepageSlug)) {
             return redirect('/', 301);
