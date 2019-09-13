@@ -34,7 +34,7 @@ class PageController extends Controller
         }
 
         if ($domain && in_array($domain, config('novapages.domainMap'))) {
-            $path = str_replace(config('novapages.homepageSlug'), '', $path);
+            $path = str_replace(config('novapages.models.page')::getHomepageSlug(), '', $path);
             /**
              * Since we are now mapping to domain names we actually need to reverse
              * the map in order to lookup the correct page with the full path.

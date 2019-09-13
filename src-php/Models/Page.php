@@ -53,7 +53,7 @@ class Page extends Model
     public function __construct(array $attributes = [])
     {
         $this->domainMappedFolders = config('novapages.domainMap');
-        $this->homepageSlug = config('novapages.homepageSlug', 'homepage');
+        $this->homepageSlug = config('novapages.models.page')::getHomepageSlug();
 
         parent::__construct($attributes);
     }
@@ -66,6 +66,16 @@ class Page extends Model
     public function parent()
     {
         return $this->belongsTo(config('novapages.models.page', Page::class));
+    }
+
+    /**
+     * Returns the slug that should be used for the homepage.
+     *
+     * @return string
+     */
+    public static function getHomepageSlug()
+    {
+        return config('novapages.homepageSlug', 'homepage');
     }
 
     /**
