@@ -2,6 +2,8 @@
 
 namespace Dewsign\NovaPages\Models;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Maxfactor\Support\Webpage\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Maxfactor\Support\Webpage\Traits\HasSlug;
@@ -149,8 +151,8 @@ class Page extends Model
         $pathSections = explode('/', $this->getFullPath());
 
         $slugsToExclude = array_merge(
-            array_wrap($this->domainMappedFolders),
-            array_wrap($this->homepageSlug)
+            Arr::wrap($this->domainMappedFolders),
+            Arr::wrap($this->homepageSlug)
         );
 
         $finalSlug = collect($pathSections)
@@ -160,7 +162,7 @@ class Page extends Model
             })
             ->implode('/');
 
-        return str_start($finalSlug, '/');
+        return Str::start($finalSlug, '/');
     }
 
     /**
@@ -171,7 +173,7 @@ class Page extends Model
     public function getMappedUrlAttribute()
     {
         $pathSections = collect(explode('/', $this->getFullPath()))->filter();
-        $mappedFolders = collect(array_wrap($this->domainMappedFolders));
+        $mappedFolders = collect(Arr::wrap($this->domainMappedFolders));
 
         if ($mappedFolders->contains($pathSections->first())) {
             return route('domain.pages.show', [
@@ -196,7 +198,7 @@ class Page extends Model
     {
         $itemSlugs = explode('/', $path);
 
-        $slugsToExclude = array_wrap($this->homepageSlug);
+        $slugsToExclude = Arr::wrap($this->homepageSlug);
 
         $finalSlug = collect($itemSlugs)
             ->filter()
@@ -213,10 +215,10 @@ class Page extends Model
             ->get()
             ->filter(function ($item) use ($finalSlug, $excludeMappedDomains) {
                 if (!$excludeMappedDomains) {
-                    return $item->getFullPath() === str_start($finalSlug, '/');
+                    return $item->getFullPath() === Str::start($finalSlug, '/');
                 }
 
-                return $item->full_path === str_start($finalSlug, '/');
+                return $item->full_path === Str::start($finalSlug, '/');
             });
     }
 
