@@ -2,6 +2,7 @@
 
 namespace Dewsign\NovaPages;
 
+use Illuminate\Support\Str;
 use Dewsign\NovaPages\Models\Page;
 use Illuminate\Support\Facades\File;
 
@@ -35,6 +36,6 @@ class NovaPages
     {
         $basename = str_replace('.blade.php', '', $filename);
 
-        return title_case(str_replace('-', ' ', $basename));
+        return Str::title(str_replace('-', ' ', $basename));
     }
 }
