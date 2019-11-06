@@ -60,6 +60,7 @@ class PageController extends Controller
             $page->template ? "nova-pages::templates.{$page->template}" : null,
             'nova-pages::show',
         ])
-        ->with('page', $page);
+        ->with('page', $page)
+        ->whenActive($page);
     }
 }

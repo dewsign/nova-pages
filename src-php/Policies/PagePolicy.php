@@ -43,4 +43,21 @@ class PagePolicy
     {
         return $user->can('managePage', $model);
     }
+
+    public function viewInactive($user, $page)
+    {
+        if (config('maxfactor-support.canViewInactive')) {
+            return true;
+        }
+
+        if ($page->active) {
+            return true;
+        }
+
+        if (Gate::allows('viewNova')) {
+            return true;
+        }
+
+        return false;
+    }
 }
