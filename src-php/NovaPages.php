@@ -32,6 +32,18 @@ class NovaPages
         })->all();
     }
 
+    public static function availableLanguages()
+    {
+        $default = config('novapages.defaultLanguage');
+        $languages = config('novapages.languages');
+
+        $options = array_merge($default, $languages);
+
+        return collect($options)->map(function ($item) {
+            return Str::title($item);
+        });
+    }
+
     private static function getPrettyFilename($filename)
     {
         $basename = str_replace('.blade.php', '', $filename);

@@ -82,6 +82,7 @@ class Page extends Resource
             Boolean::make('Active')->sortable()->rules('required', 'boolean'),
             Boolean::make('Featured')->sortable()->rules('required', 'boolean'),
             Number::make('Priority')->sortable()->rules('required', 'integer'),
+            $this->languageOptions(),
             TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('slug'),
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
             BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable()->rules('not_in:{{resourceId}}'),
@@ -106,6 +107,22 @@ class Page extends Resource
 
         return $this->merge([
             Select::make('Template')
+                ->options($options)
+                ->displayUsingLabels()
+                ->hideFromIndex(),
+        ]);
+    }
+
+    private function languageOptions()
+    {
+        if (!config('novapages.enableLanguageSelection')) {
+            return $this->merge([]);
+        }
+
+        $options = NovaPages::availableLanguages();
+
+        return $this->merge([
+            Select::make('Language (English by default)', 'language')
                 ->options($options)
                 ->displayUsingLabels()
                 ->hideFromIndex(),

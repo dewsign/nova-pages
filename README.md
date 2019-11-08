@@ -187,3 +187,13 @@ Will return the Page model if a matching page is found, otherwise will return an
 ```
 
 Use the meta page to provide this content to the front-end means you can re-use a lot of code across all sections of your site to keep things consistent and benefit from the included SEO value.
+
+### Language
+
+You are able to change what html lang type the page will be on creation. You can enable this functionality by setting the `enableLanguageSelection` config value to `true`;
+
+To implement this into your markup, we suggest adding this to your `layouts.default` view:
+
+```php
+<html lang="{{ array_get($page ?? [], 'language', app()->getLocale()) }}">
+```
