@@ -4,6 +4,7 @@ namespace Dewsign\NovaPages\Nova;
 
 use Laravel\Nova\Resource;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
@@ -122,7 +123,10 @@ class Page extends Resource
         $options = NovaPages::availableLanguages();
 
         return $this->merge([
-            Select::make('Language (English by default)', 'language')
+            Text::make('Language', function () {
+                return country($this->formatLanguageCode())->getEmoji();
+            }),
+            Select::make(__('Language'), 'language')
                 ->options($options)
                 ->displayUsingLabels()
                 ->hideFromIndex(),

@@ -40,7 +40,7 @@ class NovaPages
         $options = array_merge($default, $languages);
 
         return collect($options)->map(function ($item) {
-            return Str::title($item);
+            return __($item);
         });
     }
 

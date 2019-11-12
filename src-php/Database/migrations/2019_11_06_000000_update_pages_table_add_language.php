@@ -14,7 +14,7 @@ class UpdatePagesTableAddLanguage extends Migration
     public function up()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->string('language')->default('en')->after('template');
+            $table->string('language')->default(array_key_first(config('novapages.defaultLanguage')))->after('template');
         });
     }
 

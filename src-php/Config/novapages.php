@@ -17,14 +17,14 @@ return [
     ],
     'domainMap' => [],
     'rootDomain' => env('ROOT_DOMAIN', config('session.domain')),
-    'enableLanguageSelection' => false,
+    'enableLanguageSelection' => true,
     'defaultLanguage' => [
-        'en' => 'english'
+        'en-GB' => 'English'
     ],
     'languages' => [
-        'de' => 'german',
-        'nl' => 'dutch',
-        'fr' => 'french',
-        'it' => 'italian'
+        'de' => 'German',
+        'nl' => 'Dutch',
+        'fr' => 'French',
+        'it' => 'Italian'
     ]
 ];
