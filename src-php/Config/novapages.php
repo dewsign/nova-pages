@@ -25,6 +25,7 @@ return [
         'de' => 'German',
         'nl' => 'Dutch',
         'fr' => 'French',
-        'it' => 'Italian'
+        'it' => 'Italian',
+        'es' => 'Spanish'
     ]
 ];
