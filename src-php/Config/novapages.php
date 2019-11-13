@@ -17,7 +17,7 @@ return [
     ],
     'domainMap' => [],
     'rootDomain' => env('ROOT_DOMAIN', config('session.domain')),
-    'enableLanguageSelection' => true,
+    'enableLanguageSelection' => false,
     'defaultLanguage' => [
         'en-GB' => 'English'
     ],
