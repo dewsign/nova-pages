@@ -272,8 +272,8 @@ class Page extends Model
 
         if (Str::contains($this->language, '-')) {
             return Str::after($this->language, '-');
-        } else {
-            return $this->language;
         }
+
+        return $this->language;
     }
 }

@@ -197,3 +197,5 @@ To implement this into your markup, we suggest adding this to your `layouts.defa
 ```php
 <html lang="{{ array_get($page ?? [], 'language', app()->getLocale()) }}">
 ```
+
+There is a `defaultLanguage` config variable that you are free to customise to suit your application. This package comes with `en-GB` set as the default language.
