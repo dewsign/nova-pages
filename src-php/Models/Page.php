@@ -263,4 +263,17 @@ class Page extends Model
 
         return false;
     }
+
+    public function formatLanguageCode()
+    {
+        if ($this->language === null) {
+            return Str::after(array_key_first(config('novapages.defaultLanguage')), '-');
+        }
+
+        if (Str::contains($this->language, '-')) {
+            return Str::after($this->language, '-');
+        }
+
+        return $this->language;
+    }
 }
