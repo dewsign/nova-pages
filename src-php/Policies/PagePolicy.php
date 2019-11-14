@@ -44,7 +44,7 @@ class PagePolicy
         return $user->can('managePage', $model);
     }
 
-    public function viewInactive($user, $page)
+    public function viewInactive($user = null, $page)
     {
         if (config('maxfactor-support.canViewInactive')) {
             return true;
