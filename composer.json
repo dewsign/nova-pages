@@ -32,7 +32,8 @@
     "extra":{
         "laravel": {
             "providers": [
-                "Dewsign\\NovaPages\\Providers\\PackageServiceProvider"
+                "Dewsign\\NovaPages\\Providers\\PackageServiceProvider",
+                "Dewsign\\NovaPages\\Providers\\AuthServiceProvider"
             ]
         }
     }
