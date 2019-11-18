@@ -12,6 +12,7 @@ return [
     ],
     'group' => 'Pages',
     'images' => [
+        'disabled' => false,
         'field' => 'Laravel\Nova\Fields\Image',
         'disk' => 'public',
     ],

@@ -90,7 +90,7 @@ class Page extends Resource
             Text::make('Full Path', function () {
                 return $this->mapped_url;
             })->hideFromIndex(),
-            config('novapages.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
+            $this->imageField(),
             Textarea::make('Summary'),
             HasMany::make('Child Pages', 'children', self::class),
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
@@ -111,6 +111,22 @@ class Page extends Resource
                 ->options($options)
                 ->displayUsingLabels()
                 ->hideFromIndex(),
+        ]);
+    }
+
+    /**
+     * Show the image field if enabled in the config
+     *
+     * @return mixed
+     */
+    private function imageField()
+    {
+        if (config('novapages.images.disabled')) {
+            return $this->merge([]);
+        }
+
+        return $this->merge([
+            config('novapages.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
         ]);
     }
 
