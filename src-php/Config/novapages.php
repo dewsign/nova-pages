@@ -16,6 +16,11 @@ return [
         'field' => 'Laravel\Nova\Fields\Image',
         'disk' => 'public',
     ],
+    'videos' => [
+        'disabled' => true,
+        'field' => 'Laravel\Nova\Fields\File',
+        'disk' => 'public',
+    ],
     'domainMap' => [],
     'rootDomain' => env('ROOT_DOMAIN', config('session.domain')),
     'enableLanguageSelection' => false,

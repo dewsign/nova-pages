@@ -91,6 +91,7 @@ class Page extends Resource
                 return $this->mapped_url;
             })->hideFromIndex(),
             $this->imageField(),
+            $this->videoField(),
             Textarea::make('Summary'),
             HasMany::make('Child Pages', 'children', self::class),
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
@@ -111,6 +112,22 @@ class Page extends Resource
                 ->options($options)
                 ->displayUsingLabels()
                 ->hideFromIndex(),
+        ]);
+    }
+
+    /**
+     * Show the video field if enabled in the config
+     *
+     * @return mixed
+     */
+    private function videoField()
+    {
+        if (config('novapages.videos.disabled')) {
+            return $this->merge([]);
+        }
+
+        return $this->merge([
+            config('novapages.videos.field')::make('Video')->disk(config('novapages.videos.disk', 'public')),
         ]);
     }
 
