@@ -203,4 +203,4 @@ There is a `defaultLanguage` config variable that you are free to customise to s
 
 ## Access Control
 
-This package makes use of [silvanite/novatoolpermissions](https://github.com/Silvanite/novatoolpermissions) to handle access control to pages. Please refer to the 
+This package makes use of [silvanite/novatoolpermissions](https://github.com/Silvanite/novatoolpermissions) to handle access control to pages. Please refer to the documentation for `novatoolpermissions` for more info. 

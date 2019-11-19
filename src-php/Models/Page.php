@@ -5,6 +5,7 @@ namespace Dewsign\NovaPages\Models;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Maxfactor\Support\Webpage\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Builder;
 use Maxfactor\Support\Webpage\Traits\HasSlug;
 use Maxfactor\Support\Webpage\Traits\HasParent;
@@ -14,6 +15,7 @@ use Maxfactor\Support\Model\Traits\WithPrioritisation;
 use Maxfactor\Support\Webpage\Traits\HasMetaAttributes;
 use Maxfactor\Support\Webpage\Traits\MustHaveCanonical;
 use Dewsign\NovaRepeaterBlocks\Traits\HasRepeaterBlocks;
+use Silvanite\NovaToolPermissions\Traits\HasAccessControl;
 
 class Page extends Model
 {
@@ -21,6 +23,7 @@ class Page extends Model
     use HasParent;
     use CanBeFeatured;
     use HasActiveState;
+    use HasAccessControl;
     use HasMetaAttributes;
     use HasRepeaterBlocks;
     use MustHaveCanonical;
