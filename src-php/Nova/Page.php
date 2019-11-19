@@ -95,6 +95,7 @@ class Page extends Resource
             HasMany::make('Child Pages', 'children', self::class),
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
             MetaAttributes::make(),
+            AccessControl::make(),
         ];
     }
 
