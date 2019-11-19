@@ -199,3 +199,8 @@ To implement this into your markup, we suggest adding this to your `layouts.defa
 ```
 
 There is a `defaultLanguage` config variable that you are free to customise to suit your application. This package comes with `en-GB` set as the default language.
+
+
+## Access Control
+
+This package makes use of [silvanite/novatoolpermissions](https://github.com/Silvanite/novatoolpermissions) to handle access control to pages. Please refer to the 
