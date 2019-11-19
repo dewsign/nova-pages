@@ -12,7 +12,13 @@ return [
     ],
     'group' => 'Pages',
     'images' => [
+        'disabled' => false,
         'field' => 'Laravel\Nova\Fields\Image',
+        'disk' => 'public',
+    ],
+    'videos' => [
+        'disabled' => true,
+        'field' => 'Laravel\Nova\Fields\File',
         'disk' => 'public',
     ],
     'domainMap' => [],
