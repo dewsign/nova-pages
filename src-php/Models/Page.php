@@ -110,6 +110,16 @@ class Page extends Model
     }
 
     /**
+     * Check if the user is authorised to view the page
+     *
+     * @return void
+     */
+    public function authoriseToView()
+    {
+        abort_if(Gate::denies('accessContent', $this), 403);
+    }
+
+    /**
      * Recursively add parent pages to the breadcrumb seed
      *
      * @param Illuminate\Support\Collection $seed

@@ -60,4 +60,21 @@ class PagePolicy
 
         return false;
     }
+
+    public function accessContent($user = null, $page)
+    {
+        if ($page->access === null) {
+            return true;
+        }
+
+        if (!count($page->access->roles)) {
+            return true;
+        }
+
+        if ($user === null) {
+            return false;
+        }
+
+        return $user->roles->pluck('id')->intersect($page->access->roles)->count();
+    }
 }
