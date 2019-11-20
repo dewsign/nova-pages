@@ -63,6 +63,8 @@ class PagePolicy
 
     public function accessContent($user = null, $page)
     {
+        $page = $this->getFirstPageWithAccessRoles($page);
+
         if ($page->access === null) {
             return true;
         }
@@ -76,5 +78,18 @@ class PagePolicy
         }
 
         return $user->roles->pluck('id')->intersect($page->access->roles)->count();
+    }
+
+    private function getFirstPageWithAccessRoles($page)
+    {
+        if ($page->roles) {
+            return $page;
+        }
+
+        if (!$page->parent) {
+            return $page;
+        }
+
+        return $this->getFirstPageWithAccessRoles($page->parent);
     }
 }
