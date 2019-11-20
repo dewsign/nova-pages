@@ -19,7 +19,7 @@
         "dewsign/nova-repeater-blocks": "^1.2.0",
         "epartment/nova-dependency-container": "^1.1",
         "silvanite/brandenburg": "^1.0",
-        "silvanite/novatoolpermissions": "^1.0",
+        "silvanite/novatoolpermissions": "^1.1",
         "rinvex/countries": "^6.1"
     },
     "require-dev": {
