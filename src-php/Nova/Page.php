@@ -24,6 +24,7 @@ use Dewsign\NovaPages\Nova\Filters\PageType;
 use Benjaminhirsch\NovaSlugField\TextWithSlug;
 use Dewsign\NovaPages\Nova\Filters\ActiveState;
 use Maxfactor\Support\Webpage\Nova\MetaAttributes;
+use Silvanite\NovaToolPermissions\Nova\AccessControl;
 
 class Page extends Resource
 {
@@ -96,6 +97,7 @@ class Page extends Resource
             HasMany::make('Child Pages', 'children', self::class),
             MorphMany::make(__('Repeaters'), 'repeaters', PageRepeaters::class),
             MetaAttributes::make(),
+            AccessControl::make(),
         ];
     }
 

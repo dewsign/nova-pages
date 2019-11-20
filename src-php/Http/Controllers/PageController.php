@@ -56,6 +56,8 @@ class PageController extends Controller
             abort(404, __('Page not found"'));
         }
 
+        $page->authoriseToView();
+
         return View::first([
             $page->template ? "nova-pages::templates.{$page->template}" : null,
             'nova-pages::show',

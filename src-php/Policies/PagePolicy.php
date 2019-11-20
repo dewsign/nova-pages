@@ -60,4 +60,42 @@ class PagePolicy
 
         return false;
     }
+
+    public function accessContent($user = null, $page)
+    {
+        $page = $this->getFirstPageWithAccessRoles($page);
+
+        if ($page->access === null) {
+            return true;
+        }
+
+        if (!count($page->access->roles)) {
+            return true;
+        }
+
+        if ($user === null) {
+            return false;
+        }
+
+        return $user->roles->pluck('id')->intersect($page->access->roles)->count();
+    }
+
+    /**
+     * Find the first page up the parent tree with access roles.
+     *
+     * @param [type] $page
+     * @return Page
+     */
+    private function getFirstPageWithAccessRoles($page)
+    {
+        if ($page->roles) {
+            return $page;
+        }
+
+        if (!$page->parent) {
+            return $page;
+        }
+
+        return $this->getFirstPageWithAccessRoles($page->parent);
+    }
 }
