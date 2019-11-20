@@ -80,6 +80,12 @@ class PagePolicy
         return $user->roles->pluck('id')->intersect($page->access->roles)->count();
     }
 
+    /**
+     * Find the first page up the parent tree with access roles.
+     *
+     * @param [type] $page
+     * @return Page
+     */
     private function getFirstPageWithAccessRoles($page)
     {
         if ($page->roles) {
