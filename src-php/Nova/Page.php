@@ -146,7 +146,7 @@ class Page extends Resource
 
         return $this->merge([
             config('novapages.images.field')::make('Image')->disk(config('novapages.images.disk', 'public')),
-            Text::make('Alternative Text')->rules('nullable', 'max:254'),
+            Text::make('Alternative Text')->rules('nullable', 'max:254')->hideFromIndex(),
         ]);
     }
 
