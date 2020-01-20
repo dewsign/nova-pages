@@ -87,7 +87,7 @@ class Page extends Resource
             $this->languageOptions(),
             TextWithSlug::make('Name')->sortable()->rules('required_if:active,1', 'max:254')->slug('slug'),
             Slug::make('Slug')->sortable()->rules('required', 'alpha_dash', 'max:254')->hideFromIndex(),
-            BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable()->rules('not_in:{{resourceId}}'),
+            BelongsTo::make('Parent', 'parent', self::class)->nullable()->searchable()->rules('not_in:{{resourceId}}')->singularLabel('Parent'),
             Text::make('Full Path', function () {
                 return $this->mapped_url;
             })->hideFromIndex(),
