@@ -13,6 +13,14 @@ use Dewsign\NovaRepeaterBlocks\Repeaters\Common\Blocks\MarkdownBlock;
 
 class PageRepeaters extends Repeater
 {
+    /**
+     * We do not want to include this in global searches because the parent repeater
+     * is already included and this would cause duplication.
+     *
+     * @var bool
+     */
+    public static $globallySearchable = false;
+
     public static function morphTo()
     {
         return config('novapages.resources.page', Page::class);
